@@ -86,7 +86,7 @@ export async function imageFromGmail(email_alvo) {
     await page.goto('https://mail.google.com/mail/u/0/#inbox?compose=new'); 
     
     // Esperar a página carregar 
-    await page.waitForNavigation();
+    //await page.waitForNavigation();
 
     // PARTE QUE JÁ ESTÁ LOGADO NO EMAIL
 
@@ -96,7 +96,7 @@ export async function imageFromGmail(email_alvo) {
     await page.type('.aoD.hl', email_alvo); // Nova "class" do Gmail (que atualiza de tempos em tempos)
 
 
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
 
  
     // Pressione a tecla Enter
