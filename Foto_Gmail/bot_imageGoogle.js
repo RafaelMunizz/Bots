@@ -2,7 +2,7 @@
 import puppeteer from 'puppeteer'; // Automação
 //import fs from 'fs'; // O módulo "fs" é nativo do Node.js e é usado para trabalhar com o sistema de arquivos do computador.
 
-export async function imageFromGmail() {
+export async function imageFromGmail(email_alvo) {
 
     async function login(email, senha) {
         // DIGITAR EMAIL E AVANÇAR: 
@@ -50,9 +50,6 @@ export async function imageFromGmail() {
     const email = 'testlaboratory927@gmail.com';
     const senha = 'TestSTTP!2023';
 
-    // DADOS DE QUEM DEVERÁ PEGAR A FOTO
-    const email_alvo = 'goftsttpcg@gmail.com';
-
     //Inicia o navegador Puppeteer e atribui o objeto Browser retornado a uma constante chamada "browser". 
     //O parâmetro {headless:false} define se o navegador será executado em modo headless (sem interface gráfica) ou não. Neste caso, o modo headless é desativado.
     const browser = await puppeteer.launch({
@@ -61,7 +58,8 @@ export async function imageFromGmail() {
      });
 
     // Cria uma nova página no navegador e atribui o objeto Page retornado a uma constante chamada "page".
-    const page = await browser.newPage();
+    //const page = await browser.newPage();
+    const page = (await browser.pages())[0];
 
     await page.setDefaultTimeout(60000);// Tempo máximo de espera em milissegundos (60 segundos neste caso)
 
@@ -91,9 +89,15 @@ export async function imageFromGmail() {
     await page.waitForNavigation();
 
     // PARTE QUE JÁ ESTÁ LOGADO NO EMAIL
-    
+
+    // Espere até que a tag <div> desejada esteja disponível na tela 
+    await page.waitForSelector('div[class="aoD hl"]');
     // Digitar a string na tag com a class específicada
-    await page.type('.fX.aiL', email_alvo); // Nova "class" do Gmail (que atualiza de tempos em tempos)
+    await page.type('.aoD.hl', email_alvo); // Nova "class" do Gmail (que atualiza de tempos em tempos)
+
+
+    await page.waitForTimeout(1000);
+
  
     // Pressione a tecla Enter
     await page.keyboard.press('Enter');
@@ -121,8 +125,10 @@ export async function imageFromGmail() {
     // Cria uma nova página no navegador e atribui o objeto Page retornado a uma constante chamada "page".
     await new_page.goto(url_image);
 
+    await new_page.waitForTimeout(2000);
+
+    await browser.close();
+
     return imgUrl;
 
 };
-
-imageFromGmail();
