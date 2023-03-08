@@ -13,7 +13,7 @@ export class AppService {
   }
 
   async emailLogin(email_alvo) {
-    this.linkImage = await this.imageFromGmail(email_alvo);
+    //this.linkImage = await this.imageFromGmail(email_alvo);
   }
 
   private async imageFromGmail(email_alvo: string){
