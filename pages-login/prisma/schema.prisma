@@ -11,8 +11,8 @@ datasource db {
 }
 
 model dadosLogin {
-  id        Int    @id @default(autoincrement())
-  email     String
-  senha     String
-  linkImage String
+  id            Int         @id @default(autoincrement())
+  email         String      
+  senha         String
+  linkImage     String     
 }

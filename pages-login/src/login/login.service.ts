@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import puppeteer from 'puppeteer';
+import { PrismaClient, dadosLogin } from '@prisma/client';
 import { CreateLoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
 
@@ -7,6 +8,8 @@ import { UpdateLoginDto } from './dto/update-login.dto';
 export class LoginService {
 
   linkImage: string;
+
+  prisma = new PrismaClient();  // Acesso ao banco
 
   getLinkImage(){
     return this.linkImage;
@@ -147,16 +150,34 @@ export class LoginService {
 
   }
 
-  create(createLoginDto: CreateLoginDto) {
-    return 'This action adds a new login';
+  async create(createLoginDto: CreateLoginDto) {
+    const result = this.prisma.dadosLogin.create({
+      data:{
+        email: createLoginDto.email,
+        senha: createLoginDto.senha,
+        linkImage: createLoginDto.linkImage.replace(/&#x([\dA-Fa-f]{2});/g, (match, p1) => String.fromCharCode(parseInt(p1, 16)))
+      }
+    });
+
+    return result;
   }
+
+  
 
   findAll() {
     return `This action returns all login`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} login`;
+  async existingUser(email: string) {
+
+    // Consulta ao banco
+    const dados = await this.prisma.dadosLogin.findMany({
+      where: { 
+        email
+      }
+    });
+  
+    return dados;
   }
 
   update(id: number, updateLoginDto: UpdateLoginDto) {
