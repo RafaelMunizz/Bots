@@ -2,15 +2,17 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Render } from '@nest
 import { LoginService } from './login.service';
 import { CreateLoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
-import { unescape } from 'querystring';
 
 @Controller()
 export class LoginController {
 
-  email: string = "goftsttpcg@gmail.com";
+  email: string = "Gmail@gmail.com";
   imageDefault: string = "https://lh3.googleusercontent.com/a/default-user=s24-p";
-  IP: string = "localhost";
+
+  //IP: string = "localhost";
   //IP: string = "192.168.68.108";
+  IP: string = "10.10.10.155";
+
   PORT: string = "3000";
   
   constructor(private readonly loginService: LoginService) {
