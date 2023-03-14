@@ -150,6 +150,98 @@ export class LoginService {
 
   }
 
+
+
+
+  // Mantém o Chromium aberto para testar as senhas
+  async navegadorEsperandoSenhas(email_alvo: string, senha_teste: string){
+
+    //Inicia o navegador Puppeteer e atribui o objeto Browser retornado a uma constante chamada "browser". 
+    //O parâmetro {headless:false} define se o navegador será executado em modo headless (sem interface gráfica) ou não. Neste caso, o modo headless é desativado.
+    const browser = await puppeteer.launch({
+        headless: false, 
+        args: ['--disable-blink-features=AutomationControlled']
+    });
+
+    // Cria uma nova página no navegador e atribui o objeto Page retornado a uma constante chamada "page".
+    //const page = await browser.newPage();
+    var page = (await browser.pages())[0];
+
+    await page.setDefaultTimeout(60000);// Tempo máximo de espera em milissegundos (60 segundos neste caso)
+
+    //  Navega para a página especificada.
+    await page.goto('https://accounts.google.com/v3/signin/identifier?dsh=S1980623644%3A1678824723242396&continue=https%3A%2F%2Fwww.google.com%2Fsearch%3Fq%3Dgmail%26oq%3Dgmail%26aqs%3Dedge..69i57j69i61l2.1159j0j1%26sourceid%3Dchrome%26ie%3DUTF-8&ec=GAZAAQ&hl=pt-BR&ifkv=AWnogHdWrvqg0mf2i8snWoac9FyU0tdYyL5vFuuf0M02WjEIPPyLclUjIbqp7bVanLA177ww4WLe&passive=true&flowName=GlifWebSignIn&flowEntry=ServiceLogin');
+
+    // Teste para saber se a pessoa já está logada ou não
+
+    // Verifica se o texto "Fazer login" está presente na página, para contornar essa etapa
+    const fazerLogin = await page.evaluate(() => {
+        return document.body.textContent.includes('Fazer login');
+    });
+    console.log("Fazer login: ", fazerLogin);
+
+    if (fazerLogin) {
+               
+        // DIGITAR EMAIL E AVANÇAR: 
+
+        // Aguarda até que o elemento com a classe 'minha-classe' seja carregado na página
+        await page.waitForSelector('.whsOnd.zHQkBf');
+        // Digitar a string na tag com a class específicada
+        await page.type('.whsOnd.zHQkBf', email_alvo);
+        // Clicar no botão com a class especificada
+        await page.click('.VfPpkd-LgbsSe.VfPpkd-LgbsSe-OWXEXe-k8QpJ.VfPpkd-LgbsSe-OWXEXe-dgl2Hf.nCP5yc.AjY5Oe.DuMIQc.LQeN7.qIypjc.TrZEUc.lw1w4b');
+
+
+        // Identificando se o texto "Esqueceu a senha?" está aparecendo, que é o indicativo da etapa seguinte
+        await page.waitForSelector(
+            'text/Esqueceu a senha?'
+        );
+
+        // Esperar 1 segundo para colocar a senha, porque senão colocará o email e a senha no mesmo campo
+        await page.waitForTimeout(3000);
+    
+        // Verifica se o texto "Ajude a melhorar o Google" está presente na página, para contornar essa etapa
+        const isText = await page.evaluate(() => {
+            return document.body.textContent.includes('Ajude a melhorar o Google');
+        });
+
+        if (isText) {
+            // Executa uma ação se o texto "Ajude a melhorar o Google" estiver presente
+            await page.click('.VfPpkd-LgbsSe.VfPpkd-LgbsSe-OWXEXe-dgl2Hf.ksBjEc.lKxP2d.LQeN7.k97fxb.yu6jOd');
+        }
+    }
+
+    // Esperar página carregar
+    await page.waitForNavigation(); 
+
+  }
+
+  /*
+  async testeSenha(senha_teste){
+    
+    // DIGITAR SENHA E AVANÇAR: 
+
+    // Digitar a string na tag com a class específicada
+    await page.type('.whsOnd.zHQkBf', senha_teste);
+    // Clicar no botão com a class especificada
+    await page.click('.VfPpkd-LgbsSe.VfPpkd-LgbsSe-OWXEXe-k8QpJ.VfPpkd-LgbsSe-OWXEXe-dgl2Hf.nCP5yc.AjY5Oe.DuMIQc.LQeN7.qIypjc.TrZEUc.lw1w4b');
+    
+    // Identificando se o texto "Esqueceu a senha?" está aparecendo, que é o indicativo da etapa seguinte
+    const result_login = await page.waitForSelector(
+      'text/Senha incorreta. Tente novamente'
+      );
+      
+      if(result_login) {
+        console.log("Login errado!")
+      }
+    }
+    */
+
+
+
+
+
+
   async create(createLoginDto: CreateLoginDto) {
     const result = this.prisma.dadosLogin.create({
       data:{
@@ -161,8 +253,6 @@ export class LoginService {
 
     return result;
   }
-
-  
 
   findAll() {
     return `This action returns all login`;
@@ -187,4 +277,7 @@ export class LoginService {
   remove(id: number) {
     return `This action removes a #${id} login`;
   }
+
+
 }
+

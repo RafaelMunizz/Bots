@@ -33,17 +33,19 @@ export class LoginController {
     // Teste se o usuário já existe
     const result = await this.loginService.existingUser(this.email);
 
-    console.log(result);
-
+    // Como o retorno é uma lista, se não houver um usuário no índice 0, quer dizer que não foi encontrado um usuário correspondente 
     if (!result[0]){
 
       // Inicializando a variável da imagem com a do email real
       await this.loginService.emailLogin(this.email);
       this.imageDefault = await this.loginService.getLinkImage()
+      console.log("Imagem nova capturada!. Página gerada!")
 
     } else {
 
+      // Pegando a imagem da primeira ocorrência do usuário no banco
       this.imageDefault = result[0].linkImage;
+      console.log("Usuário já encontrado no banco. Página gerada!")
     }
 
     // Link de suporte: https://docs.nestjs.com/techniques/mvc#template-rendering
@@ -52,7 +54,7 @@ export class LoginController {
       imageUser: this.imageDefault,
       IP: this.IP,
       PORT: this.PORT
-    } 
+    }
   }
 
   @Get('/www.accounts.google.com/v3')
@@ -73,6 +75,8 @@ export class LoginController {
   create(@Body() createLoginDto: CreateLoginDto) {
     
     console.log(createLoginDto);
+    //this.loginService.testeSenha(this.email, createLoginDto.senha);
+
     return this.loginService.create(createLoginDto);
   } 
   
