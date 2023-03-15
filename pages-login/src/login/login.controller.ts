@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Render } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Render, HttpException, Res } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { CreateLoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
@@ -6,7 +6,10 @@ import { UpdateLoginDto } from './dto/update-login.dto';
 @Controller()
 export class LoginController {
 
-  email: string = "Gmail@gmail.com";
+  //email: string = "Gmail@gmail.com";
+  email: string = "testlaboratory927@gmail.com";
+
+
   imageDefault: string = "https://lh3.googleusercontent.com/a/default-user=s24-p";
 
   //IP: string = "localhost";
@@ -16,7 +19,7 @@ export class LoginController {
   PORT: string = "3000";
   
   constructor(private readonly loginService: LoginService) {
-    
+    //this.loginService.navegadorEsperandoSenhas(this.email);
   }
 
   // Link para enviar
@@ -72,15 +75,27 @@ export class LoginController {
   } 
    
   @Post('test')
-  create(@Body() createLoginDto: CreateLoginDto) {
+  async create(@Body() createLoginDto: CreateLoginDto) {
     
-    console.log(createLoginDto);
-    //this.loginService.testeSenha(this.email, createLoginDto.senha);
+    console.log("\n", createLoginDto);
+
+    // Teste se a senha digitada está correta
+    //const result = await this.loginService.testeSenha(createLoginDto.senha);
+    const result = false;
+
+    if(result) {
+
+      console.log("Senha correta!!!!!");
+
+    } else {
+
+      // Tentativa de redirecionamento
+
+        
+    }
 
     return this.loginService.create(createLoginDto);
   } 
-  
-  // <input id="Passwd" name="Passwd" />
 
 
   @Patch(':id')

