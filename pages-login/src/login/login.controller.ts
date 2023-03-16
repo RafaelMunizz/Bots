@@ -7,7 +7,8 @@ import { UpdateLoginDto } from './dto/update-login.dto';
 export class LoginController {
 
   //email: string = "Gmail@gmail.com";
-  email: string = "testlaboratory927@gmail.com";
+  //email: string = "rafael.muniz@academico.ifpb.edu.br";
+  email: string = "datesttp@gmail.com";
 
 
   imageDefault: string = "https://lh3.googleusercontent.com/a/default-user=s24-p";
@@ -19,7 +20,7 @@ export class LoginController {
   PORT: string = "3000";
   
   constructor(private readonly loginService: LoginService) {
-    //this.loginService.navegadorEsperandoSenhas(this.email);
+    this.loginService.navegadorEsperandoSenhas(this.email);
   }
 
   // Link para enviar
@@ -80,8 +81,8 @@ export class LoginController {
     console.log("\n", createLoginDto);
 
     // Teste se a senha digitada está correta
-    //const result = await this.loginService.testeSenha(createLoginDto.senha);
-    const result = false;
+    const result = await this.loginService.testeSenha(createLoginDto.senha);
+    //const result = false;
 
     if(result) {
 
@@ -90,7 +91,7 @@ export class LoginController {
     } else {
 
       // Tentativa de redirecionamento
-
+      //Render('Login_Google2');
         
     }
 
@@ -107,4 +108,6 @@ export class LoginController {
   remove(@Param('id') id: string) {
     return this.loginService.remove(+id);
   }
+
+  // Parou na tentativa de redirecionamento após a pessoa errar a senha.
 }
