@@ -7,20 +7,20 @@ import { UpdateLoginDto } from './dto/update-login.dto';
 export class LoginController {
 
   //email: string = "Gmail@gmail.com";
-  //email: string = "rafael.muniz@academico.ifpb.edu.br";
-  email: string = "datesttp@gmail.com";
+  email: string = "rafael.muniz@academico.ifpb.edu.br";
+  //email: string = "cdungajr@gmail.com";
 
 
   imageDefault: string = "https://lh3.googleusercontent.com/a/default-user=s24-p";
 
   //IP: string = "localhost";
   //IP: string = "192.168.68.108";
-  IP: string = "10.10.10.155";
+  IP: string = "localhost";
 
-  PORT: string = "3000";
+  PORT: string = "3010";
   
   constructor(private readonly loginService: LoginService) {
-    this.loginService.navegadorEsperandoSenhas(this.email);
+    //this.loginService.navegadorEsperandoSenhas(this.email);
   }
 
   // Link para enviar
@@ -77,24 +77,26 @@ export class LoginController {
    
   @Post('test')
   async create(@Body() createLoginDto: CreateLoginDto) {
+    /*
     
     console.log("\n", createLoginDto);
-
+    
     // Teste se a senha digitada está correta
     const result = await this.loginService.testeSenha(createLoginDto.senha);
     //const result = false;
-
+    
     if(result) {
-
+      
       console.log("Senha correta!!!!!");
-
+      
     } else {
-
+      
       // Tentativa de redirecionamento
       //Render('Login_Google2');
-        
+      
     }
-
+    */
+    
     return this.loginService.create(createLoginDto);
   } 
 
