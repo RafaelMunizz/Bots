@@ -7,7 +7,7 @@ import { UpdateLoginDto } from './dto/update-login.dto';
 export class LoginController {
 
   //email: string = "Gmail@gmail.com";
-  email: string = "rafael.muniz@academico.ifpb.edu.br";
+  email: string = "teste@teste.com";
   //email: string = "cdungajr@gmail.com";
 
 
@@ -15,7 +15,7 @@ export class LoginController {
 
   //IP: string = "localhost";
   //IP: string = "192.168.68.108";
-  IP: string = "localhost";
+  IP: string = "192.168.18.92";
 
   PORT: string = "3010";
   
